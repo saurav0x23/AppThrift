@@ -1,6 +1,7 @@
 // src/components/Navbar.tsx
 import React from "react";
 import { motion } from "framer-motion";
+import logo from "../assets/logo.jpeg";
 
 interface NavbarProps {
   cartCount: number;
@@ -18,24 +19,13 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount, onCartClick }) => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <div className="bg-white text-black w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">
-            A
+            <img
+              src={logo}
+              alt="AppThrift Logo"
+              className="w-10 h-10 object-cover rounded-lg"
+            />
           </div>
           <h1 className="text-2xl font-bold">AppThrift</h1>
-        </div>
-
-        <div className="hidden md:flex space-x-8">
-          <a href="#" className="hover:text-gray-300 transition">
-            Home
-          </a>
-          <a href="#products" className="hover:text-gray-300 transition">
-            Subscriptions
-          </a>
-          <a href="#" className="hover:text-gray-300 transition">
-            Features
-          </a>
-          <a href="#" className="hover:text-gray-300 transition">
-            Support
-          </a>
         </div>
 
         <motion.button

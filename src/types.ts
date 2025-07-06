@@ -2,10 +2,10 @@
 export type Product = {
   id: number;
   name: string;
-  description: string;
   category: string;
   price: number;
   image: string;
+  validity: string;
 };
 
 export interface CartItem extends Product {

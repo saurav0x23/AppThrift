@@ -14,9 +14,12 @@
     "@tailwindcss/vite": "^4.1.7",
     "clsx": "^2.1.1",
     "framer-motion": "^12.19.2",
+    "keen-slider": "^6.8.6",
     "lucide-react": "^0.511.0",
+    "razorpay": "^2.9.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-paypal-js": "^0.0.1-security",
     "react-router-dom": "^7.6.3",
     "supabase": "^2.26.9",
     "tailwind-variants": "^1.0.0"
