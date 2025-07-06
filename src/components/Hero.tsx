@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
   MonitorPlay,
   Music,
@@ -109,7 +109,7 @@ const Hero = () => {
   };
 
   // Container animation variants
-  const containerVariants = {
+  const containerVariants : Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -120,7 +120,7 @@ const Hero = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants : Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -239,7 +239,7 @@ const Hero = () => {
               variants={itemVariants}
               className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 pt-6 sm:pt-8 lg:pt-10"
             >
-              {categories.map((cat, i) => (
+              {categories.map((cat) => (
                 <motion.div
                   key={cat.name}
                   variants={itemVariants}

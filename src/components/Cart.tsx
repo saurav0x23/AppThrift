@@ -1,6 +1,6 @@
 // src/components/Cart.tsx
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence, easeInOut, delay } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import logo from "../assets/logo.jpeg";
 import type { CartItem } from "../types";
 
@@ -74,19 +74,19 @@ const Cart: React.FC<CartProps> = ({
   };
 
   // Animation variants for smoother transitions
-  const backdropVariants = {
+  const backdropVariants : Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.3, ease: "easeOut" },
+      transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.3, ease: "easeIn" },
+      transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
 
-  const cartVariants = {
+  const cartVariants : Variants = {
     hidden: {
       x: "100%",
       opacity: 0,
@@ -111,7 +111,7 @@ const Cart: React.FC<CartProps> = ({
     },
   };
 
-  const itemVariants = {
+  const itemVariants : Variants = {
     hidden: {
       opacity: 0,
       x: 20,
@@ -138,7 +138,7 @@ const Cart: React.FC<CartProps> = ({
     },
   };
 
-  const buttonVariants = {
+  const buttonVariants : Variants = {
     hover: {
       scale: 1.02,
       transition: { duration: 0.2 },

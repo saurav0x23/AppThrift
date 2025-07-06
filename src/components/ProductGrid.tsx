@@ -1,6 +1,6 @@
 // src/components/ProductGrid.tsx
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import ProductCard from "./ProductCard";
 import type { Product } from "../types";
 
@@ -11,7 +11,7 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
   // Animation variants for staggered appearance
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -22,7 +22,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 30,
@@ -33,7 +33,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
       y: 0,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 12,
         mass: 0.8,
@@ -45,7 +45,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
       scale: 0.95,
       transition: {
         duration: 0.2,
-        ease: "easeInOut",
+        ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
       },
     },
   };

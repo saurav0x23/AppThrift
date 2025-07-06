@@ -1,6 +1,6 @@
 // src/components/ProductCard.tsx
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { Product } from "../types";
 
 interface ProductCardProps {
@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     setIsAdding(false);
   };
 
-  const cardVariants = {
+  const cardVariants : Variants = {
     rest: {
       scale: 1,
       y: 0,
@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     },
   };
 
-  const buttonVariants = {
+  const buttonVariants: Variants = {
     rest: {
       scale: 1,
       backgroundColor: "#ffffff",
@@ -73,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     },
   };
 
-  const imageVariants = {
+  const imageVariants : Variants = {
     rest: {
       scale: 1,
       filter: "brightness(0.9)",
@@ -89,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     },
   };
 
-  const priceVariants = {
+  const priceVariants : Variants = {
     rest: {
       scale: 1,
     },
