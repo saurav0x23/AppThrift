@@ -14,7 +14,7 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
   const [category, setCategory] = useState("all");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1300);
+  const [maxPrice, setMaxPrice] = useState(13000);
   useEffect(() => {
     const timeout = setTimeout(() => {
       onFilter({ category, minPrice, maxPrice });
@@ -59,12 +59,12 @@ const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
         <input
           type="range"
           min="0"
-          max="1300"
+          max="13000"
           value={maxPrice}
           onChange={(e) => setMaxPrice(parseInt(e.target.value))}
           className="w-24 accent-white"
         />
-        <span className="text-gray-400">${maxPrice}</span>
+        <span className="text-gray-400">₹{maxPrice}</span>
       </div>
 
       <div>
