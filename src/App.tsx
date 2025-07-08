@@ -12,7 +12,6 @@ import ProductPage from "./pages/ProductsPage";
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -30,7 +29,6 @@ const App: React.FC = () => {
         if (error) throw error;
 
         setProducts(data || []);
-        setFilteredProducts(data || []);
       } catch (err) {
         setError("Failed to load products");
         console.error(err);
@@ -75,31 +73,6 @@ const App: React.FC = () => {
   );
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
-  const applyFilters = (filters: {
-    category: string;
-    minPrice: number;
-    maxPrice: number;
-  }) => {
-    const filtered = products.filter((product) => {
-      const matchesCategory =
-        filters.category === "all" || product.category === filters.category;
-      const matchesPrice =
-        product.price >= filters.minPrice && product.price <= filters.maxPrice;
-      return matchesCategory && matchesPrice;
-    });
-    setFilteredProducts(filtered);
-  };
-
-  const sortProducts = (method: string) => {
-    const sorted = [...filteredProducts].sort((a, b) => {
-      if (method === "price-low") return a.price - b.price;
-      if (method === "price-high") return b.price - a.price;
-      if (method === "name") return a.name.localeCompare(b.name);
-      return 0;
-    });
-    setFilteredProducts(sorted);
-  };
-
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
@@ -142,6 +115,7 @@ const App: React.FC = () => {
                 onAddToCart={addToCart}
                 loading={loading}
                 error={error}
+                currency={currency}
               />
             }
           ></Route>

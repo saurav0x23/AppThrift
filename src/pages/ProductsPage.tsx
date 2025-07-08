@@ -246,7 +246,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
               onFilter={handleFilter}
               onSort={handleSort}
               categories={categories}
-              currentCategory={category}
+              currentCategory={category ?? "all"}
               currency={currency}
             />
           </motion.div>
