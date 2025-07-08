@@ -9,9 +9,17 @@ interface FiltersProps {
   }) => void;
   onSort: (method: string) => void;
   categories: string[];
+  currentCategory: string;
+  currency: string;
 }
 
-const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
+const Filters: React.FC<FiltersProps> = ({
+  onFilter,
+  onSort,
+  categories,
+  currentCategory,
+  currency,
+}) => {
   const [category, setCategory] = useState("all");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(13000);
@@ -21,7 +29,7 @@ const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
     }, 200); // debounce to avoid loops or excessive updates
 
     return () => clearTimeout(timeout);
-  }, [category, minPrice, maxPrice, onFilter]);
+  }, [category, minPrice, maxPrice, onFilter, currentCategory]);
 
   return (
     <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
@@ -54,7 +62,11 @@ const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
           onChange={(e) => setMinPrice(parseInt(e.target.value))}
           className="w-24 accent-white"
         />
-        <span className="text-gray-400">₹{minPrice}</span>
+        <span className="text-gray-400">
+          {" "}
+          {currency === "USD" ? "$" : "₹"}
+          {minPrice}
+        </span>
         <span className="text-gray-400">to</span>
         <input
           type="range"
@@ -64,7 +76,11 @@ const Filters: React.FC<FiltersProps> = ({ onFilter, onSort, categories }) => {
           onChange={(e) => setMaxPrice(parseInt(e.target.value))}
           className="w-24 accent-white"
         />
-        <span className="text-gray-400">₹{maxPrice}</span>
+        <span className="text-gray-400">
+          {" "}
+          {currency === "USD" ? "$" : "₹"}
+          {maxPrice}
+        </span>
       </div>
 
       <div>

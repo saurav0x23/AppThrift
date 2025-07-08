@@ -10,7 +10,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const Hero = () => {
+interface HeroProps {
+  onGetStarted: () => void;
+  onViewAllProducts: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onGetStarted, onViewAllProducts }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const featuredProducts = [
@@ -109,7 +114,7 @@ const Hero = () => {
   };
 
   // Container animation variants
-  const containerVariants : Variants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -120,7 +125,7 @@ const Hero = () => {
     },
   };
 
-  const itemVariants : Variants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -221,14 +226,16 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold text-sm sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={onGetStarted}
+                className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold text-sm sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 Get Started - $29/month
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-gray-600 text-white rounded-xl font-semibold text-sm sm:text-lg hover:bg-gray-800 transition-all duration-300"
+                onClick={onViewAllProducts}
+                className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-gray-600 text-white rounded-xl font-semibold text-sm sm:text-lg hover:bg-gray-800 transition-all duration-300 cursor-pointer"
               >
                 View All Products
               </motion.button>

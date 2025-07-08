@@ -1,14 +1,14 @@
 // src/App.tsx
 import React, { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
+import { BrowserRouter, Routes, Route } from "react-router-dom"; // ✅ Correct imports
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ProductGrid from "./components/ProductGrid";
-import Filters from "./components/Filters";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
 import type { Product, CartItem } from "./types";
 import { supabase } from "./SupabaseClient";
+import LandingPage from "./pages/LandingPage";
+import ProductPage from "./pages/ProductsPage";
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +18,6 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch products from Supabase
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -42,6 +41,8 @@ const App: React.FC = () => {
 
     fetchProducts();
   }, []);
+  const [currency, setCurrency] = useState("INR");
+
   // Cart functions
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
@@ -74,7 +75,6 @@ const App: React.FC = () => {
   );
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
-  // Filter and sort functions
   const applyFilters = (filters: {
     category: string;
     minPrice: number;
@@ -101,58 +101,67 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
-      <Navbar cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
+    <BrowserRouter>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+        <Navbar
+          cartCount={cartCount}
+          onCartClick={() => setIsCartOpen(true)}
+          currency={currency}
+          setCurrency={setCurrency}
+        />
 
-      <main className="container mx-auto px-4 py-8">
-        <Hero />
-
-        <div className="my-12">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold mb-4 md:mb-0">
-              Popular Subscriptions
-            </h2>
-            <Filters
-              onFilter={applyFilters}
-              onSort={sortProducts}
-              categories={[...new Set(products.map((p) => p.category))]}
-            />
-          </div>
-
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-red-500">{error}</p>
-              <button
-                className="mt-4 px-6 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition"
-                onClick={() => window.location.reload()}
-              >
-                Try Again
-              </button>
-            </div>
-          ) : (
-            <ProductGrid products={filteredProducts} onAddToCart={addToCart} />
-          )}
-        </div>
-      </main>
-
-      <AnimatePresence>
-        {isCartOpen && (
-          <Cart
-            cart={cart}
-            total={cartTotal}
-            onClose={() => setIsCartOpen(false)}
-            onRemove={removeFromCart}
-            onUpdateQuantity={updateQuantity}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <LandingPage
+                products={products}
+                onAddToCart={addToCart}
+                loading={loading}
+                error={error}
+              />
+            }
           />
-        )}
-      </AnimatePresence>
+          <Route
+            path="/products"
+            element={
+              <ProductPage
+                products={products}
+                onAddToCart={addToCart}
+                loading={loading}
+                error={error}
+                currency={currency}
+              />
+            }
+          ></Route>
+          <Route
+            path="/products/:category"
+            element={
+              <ProductPage
+                products={products}
+                onAddToCart={addToCart}
+                loading={loading}
+                error={error}
+              />
+            }
+          ></Route>
+        </Routes>
 
-      <Footer />
-    </div>
+        <AnimatePresence>
+          {isCartOpen && (
+            <Cart
+              cart={cart}
+              total={cartTotal}
+              onClose={() => setIsCartOpen(false)}
+              onRemove={removeFromCart}
+              onUpdateQuantity={updateQuantity}
+              currency={currency}
+            />
+          )}
+        </AnimatePresence>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 
