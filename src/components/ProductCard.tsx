@@ -6,9 +6,14 @@ import type { Product } from "../types";
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
+  currency: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onAddToCart,
+  currency,
+}) => {
   const [isAdding, setIsAdding] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -22,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     setIsAdding(false);
   };
 
-  const cardVariants : Variants = {
+  const cardVariants: Variants = {
     rest: {
       scale: 1,
       y: 0,
@@ -73,7 +78,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     },
   };
 
-  const imageVariants : Variants = {
+  const imageVariants: Variants = {
     rest: {
       scale: 1,
       filter: "brightness(0.9)",
@@ -89,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     },
   };
 
-  const priceVariants : Variants = {
+  const priceVariants: Variants = {
     rest: {
       scale: 1,
     },
@@ -235,7 +240,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         <div className="mb-4 text-center">
           <motion.div variants={priceVariants} className="mb-2">
             <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-              ₹{product.price}
+              {currency === "INR" ? "₹" : "$"}
+              {product.price}
             </span>
           </motion.div>
           <motion.div variants={priceVariants}>

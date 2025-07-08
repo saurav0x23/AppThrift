@@ -40,6 +40,16 @@ const App: React.FC = () => {
     fetchProducts();
   }, []);
   const [currency, setCurrency] = useState("INR");
+  const conversionRateINRtoUSD = 83; // ₹83 = $1
+
+  const convertedProducts = products.map((product) => {
+    const price =
+      currency === "USD"
+        ? parseFloat(((product.price / conversionRateINRtoUSD) * 2).toFixed(0))
+        : product.price;
+
+    return { ...product, price };
+  });
 
   // Cart functions
   const addToCart = (product: Product) => {
@@ -88,10 +98,11 @@ const App: React.FC = () => {
             path="/"
             element={
               <LandingPage
-                products={products}
+                products={convertedProducts}
                 onAddToCart={addToCart}
                 loading={loading}
                 error={error}
+                currency={currency}
               />
             }
           />
@@ -99,7 +110,7 @@ const App: React.FC = () => {
             path="/products"
             element={
               <ProductPage
-                products={products}
+                products={convertedProducts}
                 onAddToCart={addToCart}
                 loading={loading}
                 error={error}
@@ -111,7 +122,7 @@ const App: React.FC = () => {
             path="/products/:category"
             element={
               <ProductPage
-                products={products}
+                products={convertedProducts}
                 onAddToCart={addToCart}
                 loading={loading}
                 error={error}

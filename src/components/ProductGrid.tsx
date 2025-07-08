@@ -7,9 +7,14 @@ import type { Product } from "../types";
 interface ProductGridProps {
   products: Product[];
   onAddToCart: (product: Product) => void;
+  currency: string;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  onAddToCart,
+  currency,
+}) => {
   // Animation variants for staggered appearance
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -120,7 +125,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
             layoutId={`product-${product.id}`}
             custom={index}
           >
-            <ProductCard product={product} onAddToCart={onAddToCart} />
+            <ProductCard
+              product={product}
+              onAddToCart={onAddToCart}
+              currency={currency}
+            />
           </motion.div>
         ))}
       </AnimatePresence>

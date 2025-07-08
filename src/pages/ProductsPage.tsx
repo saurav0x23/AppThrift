@@ -290,6 +290,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
             <ProductGrid
               products={filteredProducts}
               onAddToCart={onAddToCart}
+              currency={currency}
             />
           )}
         </motion.div>

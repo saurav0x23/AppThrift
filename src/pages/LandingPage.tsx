@@ -11,6 +11,7 @@ interface LandingPageProps {
   onAddToCart: (product: Product) => void;
   loading: boolean;
   error: string | null;
+  currency: string;
 }
 
 const LandingPage: React.FC<LandingPageProps> = ({
@@ -18,6 +19,7 @@ const LandingPage: React.FC<LandingPageProps> = ({
   onAddToCart,
   loading,
   error,
+  currency,
 }) => {
   const navigate = useNavigate();
   const productGridRef = useRef<HTMLDivElement>(null);
@@ -83,7 +85,7 @@ const LandingPage: React.FC<LandingPageProps> = ({
             </button>
           </div>
         ) : (
-          <ProductGrid products={featuredProducts} onAddToCart={onAddToCart} />
+          <ProductGrid products={featuredProducts} onAddToCart={onAddToCart} currency={currency} />
         )}
       </div>
     </main>

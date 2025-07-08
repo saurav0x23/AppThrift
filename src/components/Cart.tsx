@@ -152,7 +152,7 @@ const Cart: React.FC<CartProps> = ({
           // Close cart after a delay
           setTimeout(() => {
             onClose();
-          }, 3000);
+          }, 8000);
         } catch (error: any) {
           setPaymentStep("error");
           setErrorMessage(
