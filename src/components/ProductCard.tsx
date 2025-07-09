@@ -1,6 +1,7 @@
 // src/components/ProductCard.tsx
 import React, { useState } from "react";
 import { motion, type Variants } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import type { Product } from "../types";
 
 interface ProductCardProps {
@@ -16,8 +17,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
 
-  const handleAddToCart = async () => {
+  const handleProductClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking add to cart
     setIsAdding(true);
 
     // Simulate API call delay
@@ -176,12 +183,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       whileHover="hover"
       whileTap="tap"
       layout
+      onClick={handleProductClick}
     >
       {/* Product Image */}
       <div className="relative h-48 sm:h-52 lg:h-56 overflow-hidden">
         {!imageError ? (
           <motion.img
-            src={getProductImage(product)}
+            src={product.image_urls || getProductImage(product)}
             alt={product.name}
             className="w-full h-full object-cover"
             variants={imageVariants}
@@ -218,6 +226,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.category}
         </motion.span>
 
+        {/* Sale Badge */}
+        <motion.div
+          className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold"
+          initial={{ scale: 0, rotate: -12 }}
+          animate={{ scale: 1, rotate: -12 }}
+          transition={{ delay: 0.3 }}
+        >
+          SALE
+        </motion.div>
+
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
@@ -242,6 +260,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
               {currency === "INR" ? "₹" : "$"}
               {product.price}
+            </span>
+            <span className="text-sm text-gray-400 ml-2 line-through">
+              {currency === "INR" ? "₹" : "$"}
+              {Math.floor(product.price * 1.4)}
             </span>
           </motion.div>
           <motion.div variants={priceVariants}>

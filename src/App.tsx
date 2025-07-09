@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // ✅ Correct imports
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
@@ -9,6 +9,7 @@ import type { Product, CartItem } from "./types";
 import { supabase } from "./SupabaseClient";
 import LandingPage from "./pages/LandingPage";
 import ProductPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,6 +40,7 @@ const App: React.FC = () => {
 
     fetchProducts();
   }, []);
+
   const [currency, setCurrency] = useState("INR");
   const conversionRateINRtoUSD = 83; // ₹83 = $1
 
@@ -117,7 +119,7 @@ const App: React.FC = () => {
                 currency={currency}
               />
             }
-          ></Route>
+          />
           <Route
             path="/products/:category"
             element={
@@ -129,7 +131,17 @@ const App: React.FC = () => {
                 currency={currency}
               />
             }
-          ></Route>
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <ProductDetailPage
+                products={convertedProducts}
+                onAddToCart={addToCart}
+                currency={currency}
+              />
+            }
+          />
         </Routes>
 
         <AnimatePresence>

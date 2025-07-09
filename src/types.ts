@@ -4,8 +4,11 @@ export type Product = {
   name: string;
   category: string;
   price: number;
-  image: string;
+  image_urls: string;
   validity: string;
+  short_description: string;
+  highlights: string;
+  features: string;
 };
 
 export interface CartItem extends Product {
